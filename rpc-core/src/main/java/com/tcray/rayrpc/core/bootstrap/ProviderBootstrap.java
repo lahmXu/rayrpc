@@ -61,12 +61,20 @@ public class ProviderBootstrap implements Closeable {
         workerEventLoop.shutdownGracefully();
     }
 
+    /**
+     * 初始化执行
+     */
     @PostConstruct
     public void start() {
+        // 查询带注解的 provider
         buildProvider();
+        // 初始化 provider
         initRpcServer();
     }
 
+    /**
+     * 查询带注解的 provider 并存储的 rpc context 中
+     */
     private void buildProvider() {
         String[] beansName = applicationContext.getBeanDefinitionNames();
         for (int i = 0; i < beansName.length; i++) {
@@ -84,6 +92,9 @@ public class ProviderBootstrap implements Closeable {
         }
     }
 
+    /**
+     * 使用 netty 初始化 provider
+     */
     private void initRpcServer() {
         rpcContext.setExecutePool(threadPool);
 

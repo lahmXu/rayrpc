@@ -54,19 +54,33 @@ public class ReferenceBootstrap implements Closeable, InstantiationAwareBeanPost
         // 加上rejectHandle
         rpcContext.setExecutePool(threadPool);
 
+        // 根据 server config 创建 server, 可以从数据库中读取,之后做负载
+        // 这边只做单个配置
         // todo: use Configuration
         serverList = new HashMap<>();
         serverList.put("127.0.0.1", "6300");
 
+        // 创建 consumer client, 供后面建立连接使用
         connectionGroup.startClient(serverList, rpcContext);
     }
 
+    /**
+     * 通过实现 InstantiationAwareBeanPostProcessor 来筛选出 @EnableReference 的类
+     * @param pvs
+     * @param bean
+     * @param beanName
+     * @return
+     * @throws BeansException
+     */
     @Override
     public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) throws BeansException {
+
+        // 筛选出指定包下面的类
         if (bean.getClass().getPackage().getName().startsWith(scanPackage)) {
             Field[] declaredFields = bean.getClass().getDeclaredFields();
             List<Field> consumers = Arrays.stream(declaredFields).filter(field -> field.isAnnotationPresent(EnableReference.class)).collect(Collectors.toList());
 
+            // 将带有注解的成员变量设置为新创建的 consumer
             consumers.stream().forEach(consumer -> {
                 Object consumer1 = createConsumer(consumer.getType());
                 try {

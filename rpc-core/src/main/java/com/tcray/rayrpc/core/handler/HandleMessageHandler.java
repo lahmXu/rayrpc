@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author lirui
  */
 @Slf4j
-public class HandleMessageHandler implements Runnable{
+public class HandleMessageHandler implements Runnable {
 
     private final RpcContext rpcContext;
     private final JSONArray jsonArray;

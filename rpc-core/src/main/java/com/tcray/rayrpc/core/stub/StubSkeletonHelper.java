@@ -11,9 +11,16 @@ import java.lang.reflect.Method;
 
 /**
  * @author lirui
+ * provider 创建 helper
  */
 public class StubSkeletonHelper {
 
+    /**
+     * 根据 class 文件将类方法存储到一个 map 里面
+     * @param clazz
+     * @param serviceImpl
+     * @param rpcContext
+     */
     public static void createProvider(Class<?> clazz, Object serviceImpl, RpcContext rpcContext) {
         String clazzName = clazz.getName();
         Class<?> callClass = serviceImpl.getClass();
@@ -30,6 +37,12 @@ public class StubSkeletonHelper {
         }
     }
 
+    /**
+     * 构建 provider 元信息
+     * @param method
+     * @param serviceImpl
+     * @return
+     */
     private static ProviderMeta buildProviderMeta(Method method, Object serviceImpl) {
         String methodSign = Methods.methodSign(method);
         ProviderMeta providerMeta = new ProviderMeta();
@@ -39,6 +52,11 @@ public class StubSkeletonHelper {
         return providerMeta;
     }
 
+    /**
+     * 校验特殊的方法不需要注册
+     * @param method
+     * @return
+     */
     public static boolean checkRpcMethod(final Method method) {
         //本地方法不代理
         if ("toString".equals(method.getName()) ||
@@ -52,6 +70,7 @@ public class StubSkeletonHelper {
         }
         return true;
     }
+
 
     public static <T> T createConsumer(ConnectionGroup connectionGroup, Class<?> clazz, RpcContext rpcContext) {
         String clazzName = clazz.getName();

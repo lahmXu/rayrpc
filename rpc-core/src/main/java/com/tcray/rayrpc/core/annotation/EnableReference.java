@@ -4,6 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * @author lirui
+ * 使用远程调用
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

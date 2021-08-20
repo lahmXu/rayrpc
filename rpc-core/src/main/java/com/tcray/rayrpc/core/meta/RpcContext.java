@@ -13,9 +13,14 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * @author lirui
+ * rpc context 存储 rpc 相关的信息
  */
 public class RpcContext {
 
+    /**
+     * 存储 provider 信息
+     * 使用 MultiValueMap 存储,表示一个类有多个方法
+     */
     @Getter
     private MultiValueMap<String, ProviderMeta> providerHolder = new LinkedMultiValueMap<>();
 
