@@ -8,6 +8,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * @author lirui
+ * 消息处理类, 使用 netty 来处理消息
  */
 @Sharable
 public class MsgHandler extends ChannelInboundHandlerAdapter {

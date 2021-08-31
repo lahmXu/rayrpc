@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author lirui
  * rpc context 存储 rpc 相关的信息
+ * 发送端上下文
  */
 public class RpcContext {
 

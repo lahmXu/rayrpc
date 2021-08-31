@@ -7,6 +7,11 @@ import java.util.Arrays;
 
 public class Methods {
 
+    /**
+     * 返回方法签名字符串
+     * @param method
+     * @return
+     */
     public static String methodSign(Method method) {
         if (method != null) {
             StringBuilder builder = new StringBuilder("method:");
